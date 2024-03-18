@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  api:
+    container_name: api
+    build: ./api
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./api/:/usr/src/api/
+      - /usr/src/api/node_modules
+
+  app:
+    container_name: app
+    build: ./app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./app:/usr/src/app
+      - node_modules_app:/usr/src/app/node_modules
+    depends_on:
+      - api
+
+volumes:
+  node_modules_app:
